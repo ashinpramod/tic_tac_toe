@@ -1,4 +1,4 @@
-import 'dart:js';
+
 
 import 'package:flutter/material.dart';
 
@@ -32,38 +32,43 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: Colors.white,
-      body: GridView.builder(
-          itemCount: 9,
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () {
-                _pressed(index);
-              },
-              child: Container(
-                  decoration: BoxDecoration(border: Border.all()),
-                  child: Center(
-                      child: Text(
-                    viewTap[index],
-                    //index.toString(),
-                    style: TextStyle(color: Colors.black, fontSize: 30),
-                  ))),
-            );
-          }),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+          child: GridView.builder(
+              itemCount: 9,
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () {
+                    _pressed(index);
+                  },
+                  child: Container(
+                      decoration: BoxDecoration(color:Colors.greenAccent.shade100,border: Border.all(),boxShadow: [BoxShadow(color:Colors.black,offset: Offset(-4.0, -4.0),
+                      blurRadius: 15,spreadRadius: 1.0)]),
+                      child: Center(
+                          child: Text(
+                        viewTap[index],
+                        //index.toString(),
+                        style: TextStyle(color: Colors.black, fontSize: 30),
+                      ))),
+                );
+              }),
+        ),
     );
   }
 
   void _pressed(int index) {
     setState(() {
       // viewTap[index]="O";
-      if (firstTurn) {
-        viewTap[index] = "X";
-      } else {
+      if (firstTurn && viewTap[index]=="") {    //for no tap change //first turn and there is nothing
         viewTap[index] = "O";
-        firstTurn = !firstTurn;
-        _checkWin();
+      } else if(!firstTurn && viewTap[index]=="") {
+        viewTap[index] = "X";
       }
+        firstTurn = !firstTurn;      //O / X
+        _checkWin();
+
     });
   }
 
@@ -71,42 +76,57 @@ class _HomepageState extends State<Homepage> {
     if (viewTap[0] == viewTap[1] &&
         viewTap[0] == viewTap[2] &&
         viewTap[0] != '') {
-      _showMessage(viewTap[0]);
+     _showMessage(context,viewTap[0] );
     }
     if (viewTap[3] == viewTap[4] &&
         viewTap[3] == viewTap[5] &&
         viewTap[3] != "") {
-      _showMessage(viewTap[3]);
+     _showMessage(context,viewTap[3] );
     }
-    if (viewTap[6] == viewTap[7] && viewTap[6] == viewTap[8] && viewTap != "") {
-      _showMessage(viewTap[6]);
+    if (viewTap[6] == viewTap[7] &&
+        viewTap[6] == viewTap[8] &&
+        viewTap[6] != "") {
+      _showMessage(context,viewTap[6]);
     }
-    if (viewTap[0] == viewTap[3] && viewTap[0] == viewTap[6] && viewTap != "") {
-      _showMessage(viewTap[0]);
+    if (viewTap[0] == viewTap[3] &&
+        viewTap[0] == viewTap[6] &&
+        viewTap[0] != "") {
+      _showMessage(context,viewTap[0]);
     }
-    if (viewTap[1] == viewTap[4] && viewTap[1] == viewTap[7] && viewTap != '') {
-      _showMessage(viewTap[1]);
+    if (viewTap[1] == viewTap[4] &&
+        viewTap[1] == viewTap[7] &&
+        viewTap[1] != '') {
+      _showMessage(context,viewTap[1]);
     }
-    if (viewTap[2] == viewTap[5] && viewTap[1] == viewTap[8] && viewTap != '') {
-      _showMessage(viewTap[2]);
+    if (viewTap[2] == viewTap[5] &&
+        viewTap[2] == viewTap[8] &&
+        viewTap[2] != '') {
+      _showMessage(context,viewTap[2]);
     }
-    if (viewTap[0] == viewTap[4] && viewTap[0] == viewTap[8] && viewTap != '') {
-      _showMessage(viewTap[0]);
-      if (viewTap[2] == viewTap[4] &&
-          viewTap[2] == viewTap[6] &&
-          viewTap != '') {
-        _showMessage(context);
+    if (viewTap[2] == viewTap[4] &&
+        viewTap[2] == viewTap[6] &&
+        viewTap[2] != '') {
+      _showMessage(context,viewTap[2]);
+    }
+    if (viewTap[0] == viewTap[4] &&
+        viewTap[0] == viewTap[8] &&
+        viewTap[0] != '') {
+      _showMessage(context,viewTap[0] );
+
+      }
+      else{
+       // _showMessage(context);
       }
     }
   }
-}
 
-void _showMessage(context) {
+
+void _showMessage(context, String winner) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Won"),
+          title: Text("The Winner is"   + winner),
         );
       });
 }
