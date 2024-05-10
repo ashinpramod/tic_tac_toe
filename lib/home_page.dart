@@ -13,7 +13,7 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   bool firstTurn = true;
-  String firstPlayer ="X";
+  String firstPlayer = "X";
   late bool gameEnd;
   late List<String> viewTap;
   int boxfill = 0;
@@ -43,7 +43,13 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Tic Tac Toe"),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: const Text(
+          "Tic Tac Toe",
+          style: TextStyle(
+              fontSize: 30, color: Colors.green, fontWeight: FontWeight.bold),
+        ),
       ),
       backgroundColor: Colors.white,
       body: Padding(
@@ -131,11 +137,13 @@ class _HomepageState extends State<Homepage> {
         viewTap[2] != '') {
       _showMessage(context, viewTap[2]);
     }
-    if (viewTap[2] == viewTap[4] &&
-        viewTap[2] == viewTap[6] &&
-        viewTap[2] != '') {
-      _showMessage(context, viewTap[2]);
+
+    if (viewTap[6] == viewTap[4] &&
+        viewTap[6] == viewTap[2] &&
+        viewTap[6] != '') {
+      _showMessage(context, viewTap[6]);
     }
+
     if (viewTap[0] == viewTap[4] &&
         viewTap[0] == viewTap[8] &&
         viewTap[0] != '') {
