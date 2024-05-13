@@ -14,7 +14,6 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   bool firstTurn = true;
   String firstPlayer = "X";
-  late bool gameEnd;
   late List<String> viewTap;
   int boxfill = 0;
 
@@ -25,7 +24,6 @@ class _HomepageState extends State<Homepage> {
   }
 
   void initializeGame() {
-    gameEnd = false;
     viewTap = [
       "",
       "",
@@ -96,10 +94,10 @@ class _HomepageState extends State<Homepage> {
       if (firstTurn && viewTap[index] == "") {
         //for no tap change //first turn and there is nothing
         viewTap[index] = "X";
-        boxfill += 1;
+        boxfill = boxfill + 1;
       } else if (!firstTurn && viewTap[index] == "") {
         viewTap[index] = "O";
-        boxfill += 1;
+        boxfill = boxfill + 1;
       }
       firstTurn = !firstTurn; //O / X
       _checkWin();
@@ -138,18 +136,17 @@ class _HomepageState extends State<Homepage> {
       _showMessage(context, viewTap[2]);
     }
 
-    if (viewTap[6] == viewTap[4] &&
-        viewTap[6] == viewTap[2] &&
-        viewTap[6] != '') {
-      _showMessage(context, viewTap[6]);
-    }
-
     if (viewTap[0] == viewTap[4] &&
         viewTap[0] == viewTap[8] &&
         viewTap[0] != '') {
       _showMessage(context, viewTap[0]);
     } else if (boxfill == 9) {
       _showDrawMessage(context);
+    }
+    if (viewTap[6] == viewTap[4] &&
+        viewTap[6] == viewTap[2] &&
+        viewTap[6] != '') {
+      _showMessage(context, viewTap[6]);
     }
   }
 
